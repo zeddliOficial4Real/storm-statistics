@@ -32,7 +32,7 @@ public class FileSpout extends BaseRichSpout {
      * */
     @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
-        outputFieldsDeclarer.declare(new Fields("lines"));
+        outputFieldsDeclarer.declare(new Fields("line"));
     }
 
     @Override

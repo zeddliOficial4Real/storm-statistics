@@ -4,7 +4,9 @@ import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;
 import org.apache.storm.topology.base.BaseRichBolt;
+import org.apache.storm.tuple.Fields;
 import org.apache.storm.tuple.Tuple;
+import org.apache.storm.tuple.Values;
 
 import java.util.Map;
 
@@ -26,13 +28,20 @@ public class SplitBolt extends BaseRichBolt {
         this.collector = collector;
     }
 
+    /**
+     * 对单词进行分词
+     * */
     @Override
-    public void execute(Tuple tuple) {
-
+    public void execute(Tuple input) {
+        String line = input.getStringByField("line");
+        String[] words=line.split("");
+        for (String word : words) {
+            this.collector.emit(new Values(word,1));
+        }
     }
 
     @Override
-    public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
-
+    public void declareOutputFields(OutputFieldsDeclarer declarer) {
+            declarer.declare(new Fields("word","count"));
     }
 }

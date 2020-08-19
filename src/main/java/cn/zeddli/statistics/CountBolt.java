@@ -6,6 +6,7 @@ import org.apache.storm.topology.OutputFieldsDeclarer;
 import org.apache.storm.topology.base.BaseRichBolt;
 import org.apache.storm.tuple.Tuple;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,9 +27,21 @@ public class CountBolt extends BaseRichBolt {
         this.collector = collector;
     }
 
-    @Override
-    public void execute(Tuple tuple) {
+    private Map<String,Integer> map = new HashMap();
 
+    @Override
+    public void execute(Tuple input) {
+        String word = input.getStringByField("word");
+        Integer num = input.getIntegerByField("count");
+        if (map.containsKey(word)){
+            map.put(word, (map.get(word)+1));
+        }else {
+            map.put(word, 1);
+        }
+        System.out.println("==========");
+        map.forEach((k,v)->{
+            System.out.println(k+"---"+v);
+        });
     }
 
     @Override
