@@ -12,8 +12,7 @@ import java.util.Map;
 
 /**
  * @Author:zedd Li
- * @date:2020/8/17
- * 统计金额bolt
+ * @date:2020/8/17 统计金额bolt
  */
 public class SumBolt extends BaseRichBolt {
 
@@ -34,7 +33,6 @@ public class SumBolt extends BaseRichBolt {
     public void execute(Tuple tuple) {
         Long orderCost = tuple.getLongByField("order_cost");
         sumOrderCost += orderCost;
-
         System.out.println("商城网站到目前" + TimeUtils.getCurrentTime() + "的商品总交易额" + sumOrderCost);
         try {
             Thread.sleep(10000);
